@@ -1,21 +1,18 @@
 package applications;
 
-import java.util.Scanner;
 import java.util.regex.*;
+import javax.swing.JOptionPane;
 
 public class PasswordFactory {
 
 	public static String createPassword () {
 		
-		Scanner entradaP = new Scanner(System.in);
 		String password = "";
 		boolean check = false;
-		
-		System.out.println("Introdueix la teva contrasenya: de 8 a 20 caràcters, amb: mínim 1 digit, 1 Majúscula, 1 minúscula, i sense espais en blanc.");
 				
 		do {
 			
-			password = entradaP.nextLine();
+			password = JOptionPane.showInputDialog("Introdueix la teva contrasenya: de 8 a 20 caràcters, amb: mínim 1 digit, 1 Majúscula, 1 minúscula, i sense espais en blanc.");
 			check = isValidPassword(password);
 			
 			if (!check) {
@@ -24,7 +21,6 @@ public class PasswordFactory {
 		} while (!check);
 		
 		System.out.println("Contrasenya correcta!");
-		entradaP.close();
 		return password;
 	}
 	

@@ -1,26 +1,26 @@
 package applications;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class MyExceptions extends InputMismatchException {
 	
-	static Scanner entradaE = new Scanner(System.in);
-	
 	public MyExceptions() {}
 	
-	/*public wrongChoice (int choice) {
-		super (choice);
+	public static int wrongChoice (int choice) {
 		
-		
-	}	*/
+		while (choice > 4 || choice < 1) {
+			
+			choice = Integer.parseInt(JOptionPane.showInputDialog("Número introduït incorrecte! Recorda: 1.- Crea video. / 2.- Crea usuari. / 3.- Veure llistat videos. / 4.- Tanca programa."));
+		}		
+		return choice;		
+	}	
 	
 	public static boolean checkAddTag (int addMoreTags) {
 						
 		while (addMoreTags > 1 || addMoreTags < 0) {
-			System.out.println("Número introduït incorrecte! Recorda: 0.- No afegir més tags. / 1.- Afegir més tags.");
-			addMoreTags = entradaE.nextInt();	
-			//entrada3.nextLine();
+						
+			addMoreTags = Integer.parseInt(JOptionPane.showInputDialog("Número introduït incorrecte! Recorda: 0.- No afegir més tags. / 1.- Afegir més tags."));
 		}
 		
 		return true;

@@ -1,21 +1,19 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.InputMismatchException;
+
+import javax.swing.JOptionPane;
 
 import applications.MyExceptions;
-import persistence.UserRepository;
 
 public class Video {
 
-	private String tittle;									
-	private String url;
-	private static List<String> tags = new ArrayList<String>();
-	static Scanner entradaV = new Scanner(System.in);
-	static Scanner entradaV2 = new Scanner(System.in);
+	protected String tittle;									
+	protected String url;
+	private ArrayList<String> tags = new ArrayList<String>();
 	
-	public Video (String tittle, String url, List<String> tags) throws Exception {
+	public Video (String tittle, String url, ArrayList<String> tags) throws Exception {
 		
 		if (tittle.equals(""))
 			throw new Exception();
@@ -25,25 +23,51 @@ public class Video {
 		this.tittle = tittle;
 		this.url = url;
 		this.tags= tags;		
-	}	
+	}
 	
-	public static List<String> addTag () {
+	public String getTittle() {
+		return tittle;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public static ArrayList<String> createTag () throws Exception  {
 		
 		String tag = "";
-		System.out.println("Introdueix els tags del teu video: ");
 		int addMoreTags = 1;
-		
+		ArrayList<String> tagsToAdd = new ArrayList<>();
+				
 		while (addMoreTags == 1) {
 			
-			do {
+			do {			
+				tag = JOptionPane.showInputDialog("Introdueix un tag del teu video: ");
+				if (tag.equals(""))
+					throw new Exception();
+				tagsToAdd.add(tag);
+				try	{
+					addMoreTags = Integer.parseInt(JOptionPane.showInputDialog("Vols afegir més tags? 0.- No / 1.- Sí. "));
+				}
+				catch (InputMismatchException e) {
+					addMoreTags = Integer.parseInt(JOptionPane.showInputDialog("Error! Torna-ho a provar siusplau. Vols afegir més tags? 0.- No / 1.- Sí. "));
+					//continue;
+				}	
+					
+			} while (MyExceptions.checkAddTag(addMoreTags) == true && addMoreTags == 1);
+		}			
+		return tagsToAdd;
+	}	
+	
+	public String getTags (Video vid) {
+		
+		String allTags = "";
+		
+		for (int i=0; i<tags.size(); i++) {
 			
-				tag = entradaV.nextLine();
-				tags.add(tag);
-				System.out.println("Vols afegir més tags? 0.- No / 1.- Sí. ");
-				addMoreTags = entradaV2.nextInt();
-						
-			} while (MyExceptions.checkAddTag(addMoreTags) == true && addMoreTags == 1); 
+			allTags += tags.get(i) + " / ";
 		}
-		return tags;
+		
+		return allTags;		
 	}
 }
